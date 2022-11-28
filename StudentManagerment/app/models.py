@@ -23,6 +23,7 @@ class Teacher(Person):
     __tablename__ = 'teacher'
     identity = Column(String(100), nullable=False)
     degree = Column(String(255))
+    username = Column(String(255))
     password = Column(String(255))
     teach_details = relationship('Subject', secondary='teach_detail', lazy=True, backref=backref('teacher', lazy=True))
 
@@ -107,4 +108,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.drop_all()
         db.create_all()
-        # merged
