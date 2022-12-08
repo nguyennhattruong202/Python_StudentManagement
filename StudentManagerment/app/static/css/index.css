@@ -1,0 +1,34 @@
+#img_index_banner{
+    width: 100%;
+}
+#div_index_intro, #contact_container{
+    background-color: #ffffff;
+    margin-top: 20px;
+    border: 1px solid #dee1e6;
+    padding: 10px;
+}
+#text_intro, #title_contact{
+    font-weight: bold;
+    color: #07689f;
+    border-bottom: 2px solid #07689f;
+    padding: 10px 0px;
+}
+#content_intro, #content_contact{
+    padding: 20px;
+    background-color: #eee;
+    text-align: justify;
+}
+.nav-item{
+    margin-left: 30px;
+}
+.navbar{
+    background-color: #07689f;
+    height: 50px;
+}
+.nav-link{
+    color: #ffffff;
+}
+.nav-link:hover{
+    color: #ffffff;
+    text-decoration: underline;
+}

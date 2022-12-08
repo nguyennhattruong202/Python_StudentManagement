@@ -1,0 +1,62 @@
+{% extends 'layout/base.html' %}
+{% block title %}
+<title>Index</title>
+{% endblock %}
+{% block css %}
+<link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand-sm">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Giới thiệu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Liên hệ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Về chúng tôi</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Ngôn ngữ
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Vietnamese (vi)</a></li>
+                        <li><a class="dropdown-item" href="#">English (en)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Đăng nhập</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<img id="img_index_banner" class="img-fluid" src="{{ url_for('static', filename='images/banner.jpg') }}"
+     alt="banner_image">
+<div id="div_index_intro">
+    <h4 id="text_intro">Giới thiệu</h4>
+    <div id="content_intro">Hệ thống quản lý giáo dục thực hiện giáo dục mở, tạo bình đẳng cho mọi người trong
+        giáo dục trung học, góp phần xây dựng xã hội học tập, nâng cao tri thức và năng lực cho người học bằng
+        các phương thức linh hoạt, thuận tiện và hiệu quả, phấn đấu trở thành công cụ quản lý giáo dục hiệu quả,
+        thực hiện giáo dục mở, định hướng ứng dụng với chất lượng cao.
+    </div>
+</div>
+<div id="contact_container">
+    <h4 id="title_contact">Liên hệ</h4>
+    <div id="content_contact">
+        Hệ thống quản lý giáo dục E-SM luôn sẵn sàng hỗ trợ và giúp người dùng nâng cao trải nghiệm trong quá trình sử
+        dụng hệ thống do chúng tôi phát hành. Mọi thắc mắc hoặc khiếu nại về các sản phẩm và dịch vụ của E-SM,
+        hoặc cần giải quyết sự cố trong quá trình thanh toán, vui lòng truy cập Trung Tâm hỗ trợ người dùng để được
+        hỗ trợ nhanh chóng và hiệu quả.
+    </div>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="my-button">Liên hệ ngay</button>
+    </div>
+</div>
+{% endblock %}

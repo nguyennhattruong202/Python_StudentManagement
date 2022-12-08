@@ -1,0 +1,45 @@
+body{
+    padding: 20px 50px;
+    background-color: #f8f9fa;
+}
+.my-header-container{
+    border-top: 5px solid #07689f;
+    padding: 20px 10px;
+    background-color: #ffffff;
+}
+.my-logo, .my-logo-caption{
+    color: #07689f;
+    font-weight: bold;
+}
+.my-logo{
+    font-size: 40px;
+    text-decoration: none;
+}
+.my-logo:hover{
+    color: #07689f;
+}
+.my-logo-caption{
+    font-size: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+    padding-left: 5px;
+    border-left: 3px solid #07689f;
+}
+.my-button{
+    border: none;
+    background-color: #07689f;
+    color: #ffffff;
+    padding: 5px 20px;
+    margin-top: 10px;
+}
+.my-button:hover{
+    text-decoration: underline;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+.my-footer{
+    background-color: #07689f;
+    color: #ffffff;
+    padding: 20px 10px;
+    margin-top: 20px;
+}

@@ -1,0 +1,30 @@
+{% extends 'layout/base.html' %}
+{% block title %}
+<title>Đăng nhập</title>
+{% endblock %}
+{% block css %}
+<link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div id="login-container" class="row">
+    <div class="col d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
+        <div>
+            <div class="my-logo" style="text-align: center;">E-SM</div>
+            <div id="caption">Hệ thống quản lý giáo dục</div>
+        </div>
+    </div>
+    <div id="right-login" class="col">
+        <form method="post">
+            <h4 class="text-uppercase">Đăng nhập</h4>
+            <input name="username" class="form-control" type="text" placeholder="Tên tài khoản" required>
+            <input name="password" class="form-control" type="password" placeholder="Mật khẩu" required>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkRememberPassword">
+                <label class="form-check-label" for="checkRememberPassword">Nhớ mật khẩu</label>
+            </div>
+            <button id="login-button" type="submit">Đăng nhập</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
