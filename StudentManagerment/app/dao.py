@@ -8,6 +8,5 @@ def auth_user(username, password):
     return User.query.filter(User.username.__eq__(username.strip()), User.password.__eq__(password)).first()
 
 
-if __name__ == '__main__':
-    with app.app_context():
-        print(auth_user('haianh', '123456').degree)
+def get_user_by_id(user_id):
+    return User.query.get(user_id)

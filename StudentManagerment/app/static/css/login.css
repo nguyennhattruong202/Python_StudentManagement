@@ -31,3 +31,7 @@ div h4{
     color: #07689f;
     font-weight: bold;
 }
+#alert-login{
+    border-radius: 0px;
+    margin-top: 20px;
+}
