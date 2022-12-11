@@ -31,8 +31,16 @@
                     </ul>
                 </li>
                 {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Đăng xuất</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/logout" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Xin chào, {{ current_user.full_name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/employee">Trang chủ nhân viên</a></li>
+                        <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
+                        <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                    </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">

@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from app import dao
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from app.models import UserRole
 
 
@@ -26,3 +26,19 @@ def user_login():
 def logout_my_user():
     logout_user()
     return redirect('/login')
+
+
+def student_employee():
+    students = dao.load_student()
+    return render_template('employee/emp_student.html', students=students)
+
+
+def index_employee():
+    if current_user.is_authenticated and current_user.user_role == UserRole.EMPLOYEE:
+        return render_template('employee/emp_index.html')
+    else:
+        return redirect('/login')
+
+
+def employee_student_add():
+    return render_template('employee/emp_student_add.html')

@@ -3,6 +3,9 @@ from app.admin import *
 
 app.add_url_rule('/', 'index', controller.index)
 app.add_url_rule('/logout', 'logout', controller.logout_my_user)
+app.add_url_rule('/employee', 'employee', controller.index_employee)
+app.add_url_rule('/employee/students', 'employee-students', controller.student_employee)
+app.add_url_rule('/employee/student/add', 'employee-student-add', controller.employee_student_add)
 app.add_url_rule('/login', 'login', controller.user_login, methods=['get', 'post'])
 
 

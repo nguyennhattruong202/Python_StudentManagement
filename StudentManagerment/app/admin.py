@@ -23,6 +23,7 @@ class LogoutView(AuthenticatedView):
         return redirect(url_for('login'))
 
 
+#
 class AdminView(AdminIndexView):
     @expose('/')
     def index(self):
@@ -93,5 +94,5 @@ admin.add_view(SemesterModelView(Semester, db.session, name='Khóa học'))
 admin.add_view(SubjectModelView(Subject, db.session, name='Môn học'))
 admin.add_view(ScoreTypeModelView(ScoreType, db.session, name='Loại điểm'))
 admin.add_view(TeachDetailModelView(TeachDetail, db.session, name='Giảng dạy'))
-admin.add_view(ScoreModelView(Score, db.session, name='Điểm số'))
+admin.add_view(ScoreModelView(Score, db.session, category='Điểm số'))
 admin.add_view(LogoutView(name="Đăng xuất"))

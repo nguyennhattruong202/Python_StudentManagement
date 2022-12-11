@@ -1,9 +1,10 @@
 from enum import Enum as UserEnum
 from app import db, app
-from sqlalchemy import Column, Integer, String, Date, Enum, Float, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, Enum, Float, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 import hashlib
+from datetime import datetime
 
 
 class UserRole(UserEnum):
@@ -42,6 +43,7 @@ class User(Person, UserMixin):
 
 class Student(Person):
     __tablename__ = 'student'
+    created_date = Column(DateTime, default=datetime.now())
     class_room_id = Column(Integer, ForeignKey('class_room.id', ondelete='restrict', onupdate='restrict'),
                            nullable=True)
     scores = relationship('Score', backref='student', lazy=True)
@@ -136,4 +138,12 @@ if __name__ == '__main__':
         grade3 = Grade(name='Khối 11')
         grade4 = Grade(name='Khối 12')
         db.session.add_all([grade1, grade2, grade3, grade4])
+        db.session.commit()
+        student1 = Student(full_name='Lê Võ Đức Hiếu', gender='Nam', birthday='2002-02-06', phone='0399136290',
+                           email='2053010195hieu@ou.edu.vn')
+        student2 = Student(full_name='Tống Đăng Khoa', gender='Nam', birthday='1996-05-07', phone='0935461007',
+                           email='2053010270khoa@ou.edu.vn')
+        student3 = Student(full_name='Trần Mỹ Kim', gender='Nữ', birthday='2002-08-23', phone='0823539937',
+                           email='2053010281kim@ou.edu.vn')
+        db.session.add_all([student1, student2, student3])
         db.session.commit()

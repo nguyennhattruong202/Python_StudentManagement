@@ -1,5 +1,5 @@
 import hashlib
-from app.models import User
+from app.models import User, Student
 from app import app
 
 
@@ -10,3 +10,7 @@ def auth_user(username, password):
 
 def get_user_by_id(user_id):
     return User.query.get(user_id)
+
+
+def load_student():
+    return Student.query.all()
