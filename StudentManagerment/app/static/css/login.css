@@ -1,0 +1,37 @@
+#login-container{
+    margin-top: 20px;
+    padding: 0px 12px;
+}
+#caption{
+    color: #07689f;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+#right-login{
+    padding: 27px 20px;
+    border-left: 5px solid #07689f;
+    height: 100%;
+    background-color: #ffffff;
+}
+.form-control, .form-check{
+    border-radius: 0px;
+    margin-top: 30px;
+}
+#login-button{
+    background-color: #07689f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 0px;
+    width: 100%;
+    margin-top: 30px;
+    font-weight: bold;
+}
+div h4{
+    color: #07689f;
+    font-weight: bold;
+}
+#alert-login{
+    border-radius: 0px;
+    margin-top: 20px;
+}

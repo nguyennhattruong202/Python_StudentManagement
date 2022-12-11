@@ -1,0 +1,35 @@
+{% extends 'employee/emp_index.html' %}
+{% block title %}
+<title>E-SM - Danh sách học sinh</title>
+{% endblock %}
+{% block css %}
+<link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/employee.css') }}" rel="stylesheet">
+{% endblock %}
+{% block emp_content %}
+<div class="my-caption-box">Danh sách người học</div>
+<div id="table-student">
+    <table class="table table-striped table-hover">
+        <thead>
+        <th>Mã HS</th>
+        <th>Họ và tên</th>
+        <th>Giới tính</th>
+        <th>Ngày sinh</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+        </thead>
+        <tbody>
+        {% for s in students %}
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.full_name }}</td>
+            <td>{{ s.gender }}</td>
+            <td>{{ s.birthday }}</td>
+            <td>{{ s.phone }}</td>
+            <td>{{ s.email }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

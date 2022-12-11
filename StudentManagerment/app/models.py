@@ -1,69 +1,98 @@
+from enum import Enum as UserEnum
 from app import db, app
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Column, Integer, String, Date, Enum, Float, Text, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
+from flask_login import UserMixin
+import hashlib
+from datetime import datetime
 
 
-class Person(db.Model):
+class UserRole(UserEnum):
+    ADMIN = 1
+    TEACHER = 2
+    EMPLOYEE = 3
+
+
+class BaseModel(db.Model):
     __abstract__ = True
     id = Column(Integer, primary_key=True, autoincrement=True)
+
+
+class Person(BaseModel):
+    __abstract__ = True
     full_name = Column(String(255), nullable=False)
     gender = Column(String(50), nullable=False)
-    birthday = Column(Date)
-    phone = Column(String(50))
-    email = Column(String(255))
+    birthday = Column(Date, nullable=True)
+    phone = Column(String(50), nullable=True)
+    email = Column(String(255), nullable=True)
 
 
-teach_detail = db.Table('teach_detail', Column('id', Integer, primary_key=True, autoincrement=True),
-                        Column('startDate', Date, nullable=True),
-                        Column('teacher_id', Integer, ForeignKey('teacher.id'), nullable=True),
-                        Column('subject_id', Integer, ForeignKey('subject.id'), nullable=True))
-
-
-class Teacher(Person):
-    __tablename__ = 'teacher'
-    identity = Column(String(100), nullable=False)
-    degree = Column(String(255))
-    username = Column(String(255))
-    password = Column(String(255))
-    teach_details = relationship('Subject', secondary='teach_detail', lazy=True, backref=backref('teacher', lazy=True))
+class User(Person, UserMixin):
+    __tablename__ = 'user'
+    identity = Column(String(255), nullable=False)
+    degree = Column(String(255), nullable=True)
+    position = Column(String(255), nullable=True)
+    username = Column(String(255), nullable=False, unique=True)
+    password = Column(String(255), nullable=False)
+    user_role = Column(Enum(UserRole), nullable=False)
+    teach_detail = relationship('TeachDetail', backref='user', lazy=True)
 
     def __str__(self):
         return self.full_name
-
-
-class Grade(db.Model):
-    __tablename__ = 'grade'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False)
-    class_room = relationship('ClassRoom', backref='grade', lazy=True)
-
-    def __str__(self):
-        return self.name
-
-
-class ClassRoom(db.Model):
-    __tablename__ = 'class_room'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(100), nullable=False)
-    max_quantity = Column(Integer, nullable=False)
-    students = relationship('Student', backref='class_room', lazy=True)
-    grade_id = Column(Integer, ForeignKey(Grade.id, ondelete='restrict', onupdate='restrict'), nullable=False)
-
-    def __str__(self):
-        return self.name
 
 
 class Student(Person):
     __tablename__ = 'student'
-    class_room_id = Column(Integer, ForeignKey(ClassRoom.id, ondelete='restrict', onupdate='restrict'), nullable=False)
+    created_date = Column(DateTime, default=datetime.now())
+    class_room_id = Column(Integer, ForeignKey('class_room.id', ondelete='restrict', onupdate='restrict'),
+                           nullable=True)
+    scores = relationship('Score', backref='student', lazy=True)
 
     def __str__(self):
         return self.full_name
 
 
-class ScoreType(db.Model):
+class ClassRoom(BaseModel):
+    __tablename__ = 'class_room'
+    name = Column(String(255), nullable=False)
+    max_quantity = Column(Integer, nullable=False)
+    grade_id = Column(Integer, ForeignKey('grade.id', ondelete='restrict', onupdate='restrict'), nullable=False)
+    students = relationship('Student', backref='class_room', lazy=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Grade(BaseModel):
+    __tablename__ = 'grade'
+    name = Column(String(255), nullable=False)
+    class_rooms = relationship('ClassRoom', backref='grade', lazy=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Score(BaseModel):
+    __tablename__ = 'score'
+    score = Column(Float, default=0)
+    student_id = Column(Integer, ForeignKey(Student.id, onupdate='cascade', ondelete='cascade'), nullable=False)
+    score_type_id = Column(Integer, ForeignKey('score_type.id', ondelete='cascade', onupdate='cascade'), nullable=False)
+    semester_id = Column(Integer, ForeignKey('semester.id', ondelete='cascade', onupdate='cascade'), nullable=False)
+    subject_id = Column(Integer, ForeignKey('subject.id', ondelete='cascade', onupdate='cascade'), nullable=False)
+
+
+class Semester(BaseModel):
+    __tablename__ = 'semester'
+    name = Column(String(255), nullable=False)
+    note = Column(Text, nullable=True)
+    scores = relationship('Score', backref='semester', lazy=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ScoreType(BaseModel):
     __tablename__ = 'score_type'
-    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), nullable=False)
     scores = relationship('Score', backref='score_type', lazy=True)
 
@@ -71,40 +100,50 @@ class ScoreType(db.Model):
         return self.name
 
 
-class Semester(db.Model):
-    __tablename__ = 'semester'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False)
-    note = Column(String(255))
-    scores = relationship('Score', backref='semester', lazy=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Subject(db.Model):
+class Subject(BaseModel):
     __tablename__ = 'subject'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255))
+    name = Column(String(255), nullable=False)
+    scores = relationship('Score', backref='subject', lazy=True)
+    teach_details = relationship('TeachDetail', backref='subject', lazy=True)
 
     def __str__(self):
         return self.name
 
 
-class Score(db.Model):
-    __tablename__ = 'score'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    score = Column(Float, default=0)
-    student_id = Column(Integer, ForeignKey(Student.id, ondelete='cascade', onupdate='cascade'), nullable=True)
-    score_type = Column(Integer, ForeignKey(ScoreType.id, ondelete='cascade', onupdate='cascade'), nullable=True)
-    semester_id = Column(Integer, ForeignKey(Semester.id, ondelete='cascade', onupdate='cascade'), nullable=True)
-    subject_id = Column(Integer, ForeignKey(Subject.id, ondelete='cascade', onupdate='cascade'), nullable=True)
-
-    def __str__(self):
-        return self.score
+class TeachDetail(BaseModel):
+    __tablename__ = 'teach_detail'
+    startDate = Column(Date, nullable=True)
+    user_id = Column(Integer, ForeignKey(User.id, ondelete='restrict', onupdate='restrict'), nullable=True)
+    subject_id = Column(Integer, ForeignKey(Subject.id, onupdate='restrict', ondelete='restrict'), nullable=True)
 
 
 if __name__ == '__main__':
     with app.app_context():
         db.drop_all()
         db.create_all()
+        password_user = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
+        user1 = User(full_name='Hoàng Công Minh', gender='Nam', birthday='2001-07-25', phone='0909291469',
+                     email='1951012069minh@ou.edu.vn', identity='097201000060', degree='Thạc sĩ', position='Giáo viên',
+                     username='congminh', password=password_user, user_role=UserRole.TEACHER)
+        user2 = User(full_name='Nguyễn Duy Hải Anh', gender='Nam', birthday='2001-04-05', phone='0941996309',
+                     email='1951052009anh@ou.edu.vn', identity='097201006660', position='Admin',
+                     username='haianh', password=password_user, user_role=UserRole.ADMIN)
+        user3 = User(full_name='Nguyễn Nhật Trường', gender='Nam', birthday='2001-02-20', phone='0865789234',
+                     email='1951012146truong@ou.edu.vn', identity='073301005567', position='Nhân viên',
+                     username='nhattruong', password=password_user, user_role=UserRole.EMPLOYEE)
+        db.session.add_all([user1, user2, user3])
+        db.session.commit()
+        grade1 = Grade(name='Khối 9')
+        grade2 = Grade(name='Khối 10')
+        grade3 = Grade(name='Khối 11')
+        grade4 = Grade(name='Khối 12')
+        db.session.add_all([grade1, grade2, grade3, grade4])
+        db.session.commit()
+        student1 = Student(full_name='Lê Võ Đức Hiếu', gender='Nam', birthday='2002-02-06', phone='0399136290',
+                           email='2053010195hieu@ou.edu.vn')
+        student2 = Student(full_name='Tống Đăng Khoa', gender='Nam', birthday='1996-05-07', phone='0935461007',
+                           email='2053010270khoa@ou.edu.vn')
+        student3 = Student(full_name='Trần Mỹ Kim', gender='Nữ', birthday='2002-08-23', phone='0823539937',
+                           email='2053010281kim@ou.edu.vn')
+        db.session.add_all([student1, student2, student3])
+        db.session.commit()

@@ -1,0 +1,46 @@
+/* block 'emp_index '*/
+#emp_content_container{
+    margin-top: 20px;
+}
+.card{
+    border-radius: 0px;
+}
+.card:hover{
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19)
+}
+.card-img-top{
+    border-radius: 0px;
+}
+.card-body a{
+    text-decoration: none;
+    color: #07689f;
+}
+.card-body a:hover{
+    text-decoration: underline;
+}
+/* endblock 'emp_index '*/
+
+
+
+/* block 'emp_student_add' */
+#form_add_container{
+    padding: 10px;
+}
+/* endblock 'emp_student_add' */
+
+
+
+/* block 'emp_student' */
+.my-caption-box{
+    padding: 10px;
+    border-top: 5px solid #07689f;
+    color: #07689f;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #ffffff;
+}
+#table-student{
+    padding: 0px 10px 10px 10px;
+    background-color: #ffffff;
+}
+/* endblock 'emp_student' */
