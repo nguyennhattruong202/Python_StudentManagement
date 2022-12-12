@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block title %}
-<title>Index</title>
+<title>Trang chủ Hệ thống quản lý học sinh</title>
 {% endblock %}
 {% block css %}
 <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
@@ -32,6 +32,38 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Đăng nhập</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Xem thông tin
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/list_student"> <i class="fa-sharp fa-solid fa-eye"></i> Xem
+                            danh sách học sinh</a></li>
+                        <li><a class="dropdown-item" href="/list_class"> <i class="fa-regular fa-eye"></i> Xem
+                            danh sách lớp</a></li>
+                        <li><a class="dropdown-item" href="/list_subject"> <i class="fa-regular fa-eye"></i> Xem
+                            danh sách môn học </a></li>
+                        <li><a class="dropdown-item" href="/list_score"> <i class="fa-regular fa-eye"></i> Xem
+                            bảng điểm </a></li>
+                    </ul>
+                </li>
+                 </li>
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Quản lý chung
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item " href="/score_manager"><i class="fa-solid fa-feather"></i> Quản lý điểm</a></li>
+                        <li><a class="dropdown-item" href="/subject_manager"> <i class="fa-solid fa-clipboard"></i> Quản lý môn học </a></li>
+                        <li><a class="dropdown-item " href="/list_class/add_class"><i class="fa-solid fa-school"></i> Quản lý lớp học</a></li>
+                         <li><a class="dropdown-item " href="/list_student/input_student"><i class="fa-sharp fa-solid fa-user-plus"></i> Thêm hồ sơ</a></li>
+                    </ul>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link text-warning" href="/stats"> Thống kê báo cáo</a>
                 </li>
             </ul>
         </div>

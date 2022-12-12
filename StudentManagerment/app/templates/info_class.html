@@ -1,0 +1,51 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Thông tin lớp học{% endblock %}
+
+{% block content %}
+    <h3 class="subject">Thông tin chi tiết của lớp học</h3>
+    {% if err_msg %}
+    <div class="alert alert-danger">
+        <h3>{{ err_msg }}</h3>
+    </div>
+    {% endif %}
+    <div class="container">
+        <div class="subject">
+            <div class="row">
+                  <div class="col">Lớp: {{classroom.name}}</div>
+                  <div class="col">Sĩ số: {{quantity}}</div>
+            </div>
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for ds in classroom_student %}
+                        <tr class="hocsinh">
+                            <td></td>
+                            <td>{{ds.full_name}}</td>
+                            <td>{{ds.gender}}</td>
+                            <td>{{ds.birthday}}</td>
+                            <td>{{ds.email}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <a href="{{ url_for('add_student_class', class_room_id = class_room.id) }}">
+                    <button type="button" class="btn btn-primary">Thêm học sinh</button>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

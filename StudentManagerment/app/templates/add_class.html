@@ -1,0 +1,29 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Tạo lớp học{% endblock %}
+
+{% block content%}
+    <div class="container">
+        <h3 class="subject">Tạo lớp học mới</h3>
+        {% if err_msg %}
+        <div class="alert alert-danger">
+            <h3>{{ err_msg }}</h3>
+        </div>
+        {% endif %}
+        <form method="post">
+            <div class="form-group">
+              <label for="grade">Khối lớp</label>
+              <select class="form-control" id="grade" name="grade_name">
+                  {% for k in list_grade %}
+                <option>{{ k.name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="classroom">Lớp học</label>
+                <input type="text" id="classroom" name="classroom" class="form-control" required>
+            </div>
+            <input type="submit" value="Tạo" class="btn btn-danger">
+        </form>
+    </div>
+{% endblock %}

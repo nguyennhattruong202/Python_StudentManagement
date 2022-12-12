@@ -1,0 +1,46 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Hồ sơ của học sinh{% endblock %}
+
+{% block content %}
+    <h3 class="subject text-center">Hồ sơ của học sinh</h3>
+    <div class="container">
+        <table class="table table-borderless mb-0">
+            <tbody>
+                <tr>
+                    <th scope="row">Mã học sinh</th>
+                    <td>{{student.id}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Họ và Tên</th>
+                    <td>{{student.full_name}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Giới tính</th>
+                    <td>{{student.gender}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Ngày sinh</th>
+                    <td>{{student.birthday}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Số điện thoại</th>
+                    <td>{{student.phone}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{student.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('input_student', student_id = student.id) }}">
+            <button type="button" class="btn btn-primary">
+                Thay đổi hồ sơ
+            </button>
+        </a>
+    </div>
+
+
+
+{% endblock %}

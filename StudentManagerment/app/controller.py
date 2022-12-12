@@ -17,3 +17,4 @@ def login():
             u = request.args.get('next')
             return redirect(u if u else '/')
     return render_template('login.html')
+

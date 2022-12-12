@@ -1,0 +1,41 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Tiếp nhận học sinh{% endblock %}
+
+{% block content%}
+    <div class="container">
+        <h3 class="subject">Thông Tin Học Sinh</h3>
+        {% if err_msg %}
+        <div class="alert alert-danger">
+            <h3>{{ err_msg }}</h3>
+        </div>
+        {% endif %}
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Họ và tên</label>
+                <input type="text" value="{{ student.full_name }}" placeholder="Nhập họ và tên" id="name" name="full_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="gender">Giới tính</label>
+              <select class="form-control" id="gender" name="gender">
+                <option selected>{{ student.gender }}</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="birthday">Năm sinh</label>
+                <input type="number" value="{{ student.birthday }}" placeholder="Nhập năm sinh" id="birthday" name="birthday" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" value="{{ student.phone }}" placeholder="Nhập số điện thoại" id="phone" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" value="{{ student.email }}" placeholder="Nhập email" id="email" name="email" class="form-control">
+            </div>
+            <input type="submit" value="Lưu thông tin" class="btn btn-danger">
+        </form>
+    </div>
+{% endblock %}
