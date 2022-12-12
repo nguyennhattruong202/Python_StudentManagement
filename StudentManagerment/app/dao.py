@@ -3,6 +3,8 @@ import time
 from models import User,Person,Student,Grade,ClassRoom
 from app import app,db
 from sqlalchemy import func
+from app.models import User, Student
+from app import app
 
 
 def auth_user(username, password):
@@ -107,6 +109,9 @@ def count_quantity(class_room_id):
         return False
 
 
-if __name__ == '__main__':
-    with app.app_context():
-        print(auth_user('haianh', '123456').degree)
+def get_user_by_id(user_id):
+    return User.query.get(user_id)
+
+
+def load_student():
+    return Student.query.all()

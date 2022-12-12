@@ -1,9 +1,10 @@
 from enum import Enum as UserEnum
 from app import db, app
-from sqlalchemy import Column, Integer, String, Date, Enum, Float, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, Enum, Float, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 import hashlib
+from datetime import datetime
 
 
 class UserRole(UserEnum):
@@ -42,6 +43,7 @@ class User(Person, UserMixin):
 
 class Student(Person):
     __tablename__ = 'student'
+    created_date = Column(DateTime, default=datetime.now())
     class_room_id = Column(Integer, ForeignKey('class_room.id', ondelete='restrict', onupdate='restrict'),
                            nullable=True)
     scores = relationship('Score', backref='student', lazy=True)
@@ -137,3 +139,29 @@ if __name__ == '__main__':
         # grade3 = Grade(name='Khối 12')
         # db.session.add_all([grade1, grade2, grade3])
         # db.session.commit()
+        password_user = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
+        user1 = User(full_name='Hoàng Công Minh', gender='Nam', birthday='2001-07-25', phone='0909291469',
+                     email='1951012069minh@ou.edu.vn', identity='097201000060', degree='Thạc sĩ', position='Giáo viên',
+                     username='congminh', password=password_user, user_role=UserRole.TEACHER)
+        user2 = User(full_name='Nguyễn Duy Hải Anh', gender='Nam', birthday='2001-04-05', phone='0941996309',
+                     email='1951052009anh@ou.edu.vn', identity='097201006660', position='Admin',
+                     username='haianh', password=password_user, user_role=UserRole.ADMIN)
+        user3 = User(full_name='Nguyễn Nhật Trường', gender='Nam', birthday='2001-02-20', phone='0865789234',
+                     email='1951012146truong@ou.edu.vn', identity='073301005567', position='Nhân viên',
+                     username='nhattruong', password=password_user, user_role=UserRole.EMPLOYEE)
+        db.session.add_all([user1, user2, user3])
+        db.session.commit()
+        grade1 = Grade(name='Khối 9')
+        grade2 = Grade(name='Khối 10')
+        grade3 = Grade(name='Khối 11')
+        grade4 = Grade(name='Khối 12')
+        db.session.add_all([grade1, grade2, grade3, grade4])
+        db.session.commit()
+        student1 = Student(full_name='Lê Võ Đức Hiếu', gender='Nam', birthday='2002-02-06', phone='0399136290',
+                           email='2053010195hieu@ou.edu.vn')
+        student2 = Student(full_name='Tống Đăng Khoa', gender='Nam', birthday='1996-05-07', phone='0935461007',
+                           email='2053010270khoa@ou.edu.vn')
+        student3 = Student(full_name='Trần Mỹ Kim', gender='Nữ', birthday='2002-08-23', phone='0823539937',
+                           email='2053010281kim@ou.edu.vn')
+        db.session.add_all([student1, student2, student3])
+        db.session.commit()

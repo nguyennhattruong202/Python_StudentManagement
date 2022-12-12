@@ -1,6 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block title %}
 <title>Trang chủ Hệ thống quản lý học sinh</title>
+<title>E-SM - Hệ thống quản lý giáo dục</title>
 {% endblock %}
 {% block css %}
 <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
@@ -12,10 +13,10 @@
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Giới thiệu</a>
+                    <a class="nav-link" href="#div_index_intro">Giới thiệu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Liên hệ</a>
+                    <a class="nav-link" href="#contact_container">Liên hệ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Về chúng tôi</a>
@@ -30,6 +31,19 @@
                         <li><a class="dropdown-item" href="#">English (en)</a></li>
                     </ul>
                 </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/logout" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Xin chào, {{ current_user.full_name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/employee">Trang chủ nhân viên</a></li>
+                        <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
+                        <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                    </ul>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Đăng nhập</a>
                 </li>
@@ -65,12 +79,13 @@
                  <li class="nav-item">
                     <a class="nav-link text-warning" href="/stats"> Thống kê báo cáo</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 <img id="img_index_banner" class="img-fluid" src="{{ url_for('static', filename='images/banner.jpg') }}"
-     alt="banner_image" style="height: 420px;">
+     alt="banner_image" style="height: 470px;">
 <div id="div_index_intro">
     <h4 id="text_intro">Giới thiệu</h4>
     <div id="content_intro">Hệ thống quản lý giáo dục thực hiện giáo dục mở, tạo bình đẳng cho mọi người trong
