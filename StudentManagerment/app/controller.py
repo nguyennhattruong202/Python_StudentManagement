@@ -14,6 +14,9 @@ def user_login():
         user = dao.auth_user(username=request.form.get('username'), password=request.form.get('password'))
         if user:
             login_user(user=user)
+            u = request.args.get('next')
+            return redirect(u if u else '/')
+    return render_template('login.html')
             if user.user_role == UserRole.ADMIN:
                 return redirect('/admin')
             else:
@@ -38,7 +41,6 @@ def index_employee():
         return render_template('employee/emp_index.html')
     else:
         return redirect('/login')
-
 
 def employee_student_add():
     return render_template('employee/emp_student_add.html')

@@ -1,0 +1,73 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Thêm học sinh vào lớp học{% endblock %}
+
+{% block content%}
+    <div class="container">
+        <h3 class="subject">Thêm học sinh vào lớp {{ lophoc.name }}</h3>
+        {% if err_msg %}
+        <div class="alert alert-danger">
+            <h3>{{ err_msg }}</h3>
+        </div>
+        {% endif %}
+<!--        <form class="form-inline" method="get" action="">-->
+<!--            <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Nhập từ khóa để tìm ...">-->
+<!--            <button type="submit" class="btn btn-success" >Tìm kiếm</button>-->
+<!--        </form>-->
+<!--        <table class="table table-striped">-->
+<!--            <thead class="subject">-->
+<!--                <tr>-->
+<!--                    <th></th>-->
+<!--                    <th>Mã học sinh</th>-->
+<!--                    <th>Họ và tên</th>-->
+<!--                    <th>Giới tính</th>-->
+<!--                    <th>Ngày sinh</th>-->
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--                {% for s in dshs %}-->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <div class="form-check ">-->
+<!--                          <label class="form-check-label">-->
+<!--                            <input type="checkbox" class="form-check-input" value="">-->
+<!--                          </label>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                    <td style="text-align: center">{{ s.id }}</td>-->
+<!--                    <td>{{ s.hoten }}</td>-->
+<!--                    <td>{{ s.gioitinh }}</td>-->
+<!--                    <td>{{ s.ngaysinh }}</td>-->
+<!--                </tr>-->
+<!--                {% endfor %}-->
+<!--            </tbody>-->
+<!--        </table>-->
+        <form method="post">
+            <div class="form-group">
+                <label for="full_name">Họ và tên</label>
+                <input type="text" placeholder="Nhập họ và tên" id="full_name" name="full_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="gender">Giới tính</label>
+              <select class="form-control" id="gender" name="gender">
+                <option selected>Lựa chọn</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="birthday">Năm sinh</label>
+                <input type="number" placeholder="Nhập năm sinh" id="birthday" name="birthday" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" placeholder="Nhập số điện thoại" id="phone" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" placeholder="Nhập email" id="email" name="email" class="form-control">
+            </div>
+            <input type="submit" value="Thêm" class="btn btn-danger">
+        </form>
+    </div>
+{% endblock %}
