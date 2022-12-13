@@ -1,13 +1,23 @@
-
-from app import app, controller,dao
+import datetime
+from app import app, controller,dao,login
 from flask import session,request,render_template,redirect,url_for
 import math
 
+
 app.add_url_rule('/', 'index', controller.index)
-app.add_url_rule('/login', 'login', controller.login, methods=['get', 'post'])
+app.add_url_rule('/logout', 'logout', controller.logout_my_user)
+app.add_url_rule('/employee', 'employee', controller.index_employee)
+app.add_url_rule('/employee/students', 'employee-students', controller.student_employee)
+app.add_url_rule('/employee/student/add', 'employee-student-add', controller.employee_student_add)
+app.add_url_rule('/login', 'login', controller.user_login, methods=['get', 'post'])
 # app.add_url_rule('/input_student','input_student', controller.input_student,methods=['get','post'])
 # app.add_url_rule('/list_student','list_student', controller.list_student(),methods=['get','post'])
 
+
+
+@app.route('/admin')
+def admin():
+    render_template('admin/home.html')
 
 @app.route('/list_student')
 def list_student():
@@ -33,7 +43,7 @@ def input_student():
         birthday = request.form.get("birthday")
         phone = request.form.get("phone")
         email = request.form.get("email")
-        if dao.ktra(int(birthday)):
+        if dao.dob(birthday):
             try:
                 dao.add_or_update_student(full_name=full_name, gender=gender, birthday=birthday, phone=phone, email=email)
                 return redirect(url_for("list_student"))
@@ -77,13 +87,13 @@ def add_class():
 @app.route("/class_detail/<int:class_room_id>")
 def class_detail(class_room_id):
     err_msg = ""
-    classroom = dao.profile_class(class_room_id)
+    class_room = dao.profile_class(class_room_id)
     student_classroom = dao.read_student_class(class_room_id)
     quantity = dao.count_student_class(class_room_id)
-    return render_template('info_class.html', classroom = classroom, student_classroom=student_classroom, quantity=quantity, err_msg=err_msg)
+    return render_template('info_class.html', class_room = class_room, student_classroom=student_classroom, quantity=quantity, err_msg=err_msg)
 @app.route("/list_class/add_student_class/<int:class_room_id>", methods=["get", "post"])
 def add_student_class(class_room_id):
-    classroom = dao.profile_class(class_room_id)
+    class_room = dao.profile_class(class_room_id)
     err_msg = ""
     if request.method.lower() == "post":
         full_name = request.form.get("full_name")
@@ -101,18 +111,30 @@ def add_student_class(class_room_id):
                 err_msg = "Hệ thống đang gặp lỗi: " + str(ex)
         else:
             err_msg = "Số lượng học sinh trong lớp đã đủ"
-    return render_template('add_student_class.html', classroom=classroom, err_msg=err_msg)
-from app import app, controller, dao, login
-from app.admin import *
+    return render_template('add_student_class.html', class_room=class_room, err_msg=err_msg)
 
-app.add_url_rule('/', 'index', controller.index)
-app.add_url_rule('/logout', 'logout', controller.logout_my_user)
-app.add_url_rule('/employee', 'employee', controller.index_employee)
-app.add_url_rule('/employee/students', 'employee-students', controller.student_employee)
-app.add_url_rule('/employee/student/add', 'employee-student-add', controller.employee_student_add)
-app.add_url_rule('/login', 'login', controller.user_login, methods=['get', 'post'])
+@app.route("/list_subject")
+def list_subject():
+    kw_grade = request.args.get("grade")
+    kw_subject = request.args.get("subject")
+    # listsubject = dao.list_subject(kw_grade, kw_subject)
+    list_grade = dao.list_grade()
+    listsubject = dao.list_subject()
+    return render_template('list_subject.html', listsubject=listsubject, list_grade=list_grade)
 
+@app.route("/list_subject/add_subject", methods=["get", "post"])
+def add_subject():
+    list_grade = dao.list_grade()
+    err_msg = ""
+    if request.method.lower() == "post":
+        subject = request.form.get("subject")
+        try:
+            dao.add_subject(subject)
+            return redirect(url_for("list_subject"))
+        except Exception as ex:
+            err_msg = "Hệ thống đang có lỗi: " + str(ex)
 
+    return render_template('add_subject.html', list_grade=list_grade, err_msg=err_msg)
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id)

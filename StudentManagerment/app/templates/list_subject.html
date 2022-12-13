@@ -1,0 +1,85 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Quản Lý Môn Học{% endblock %}
+
+{% block content %}
+<div>
+
+    <div class="container">
+          <div class="row justify-content-between" style="margin: 15px">
+            <div class="col-4">
+                <a href="{{ url_for('add_subject') }}">
+                    <button type="button" class="btn btn-primary" style="margin: auto 10px">
+                        Thêm môn học
+                    </button>
+                </a>
+            </div>
+<!--Tìm kiếm-->
+            <div class="col-6">
+                <form class="form-inline" method="get" action="">
+                        <h6 style="margin: 10px">Khối lớp</h6>
+                        <select class="form-control" id="khoilop" name="khoilop">
+                            <option selected></option>
+                            {% for k in dskhoi %}
+                            <option>{{ k.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <h6 style="margin: 10px">Môn học</h6>
+                        <select class="form-control" id="monhoc" name="monhoc">
+                            <option selected></option>
+                            {% for m in monhoc %}
+                            <option>{{ m.name }}</option>
+                            {% endfor %}
+                        </select>
+                    <button type="submit" class="btn btn-success" style="margin: auto 10px" >Tìm kiếm</button>
+                </form>
+            </div>
+          </div>
+        <div class="subject">
+            <h3>Danh sách môn học</h3>
+            <div class="row">
+                <div class="col-6">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th>Mã môn</th>
+                                <th>Môn học</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in monhoc %}
+                            <tr>
+                                <td>{{ m.id }}</td>
+                                <td>{{ m.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th>Khối lớp</th>
+                                <th>Môn học</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ds in dsmh %}
+                            <tr>
+                                <td>{{ ds[2] }}</td>
+                                <td>{{ ds[1] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

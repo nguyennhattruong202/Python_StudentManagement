@@ -1,9 +1,9 @@
 import hashlib
 import time
-from models import User,Person,Student,Grade,ClassRoom
+import datetime
+from models import User,Person,Student,Grade,ClassRoom,Subject,ScoreType,Score
 from app import app,db
 from sqlalchemy import func
-from app.models import User, Student
 from app import app
 
 
@@ -41,14 +41,15 @@ def profile_student(student_id):
 
 
 
-def tinh_tuoi(ngaysinh):
-    x = time.localtime()
-    a = x[0] - int(ngaysinh)
+def tinh_tuoi(birthday):
+    x = time.localtime().tm_year
+    y = datetime.datetime(birthday).year
+    a = x - y
     return a
 
 
-def ktra(ngaysinh):
-    x = tinh_tuoi(int(ngaysinh))
+def dob(birthday):
+    x = tinh_tuoi(birthday)
     # p = quydinh.query.get(1)
     if x >= 15 and x <= 20:
         return True
@@ -108,6 +109,22 @@ def count_quantity(class_room_id):
     else:
         return False
 
+def list_subject():
+    return Subject.query.all()
+
+# def list_subject(kw_grade=None, kw_sj=None):
+#     a = db.session.query(subject_grade.subject_id, subject.name, subject_grade.grade_name)\
+#                      .join(subject, subject_grade.subject_id.__eq__(subject_id))
+#     if kw_grade:
+#         a = a.filter(monhoc_khoilop.grade_name.contains(kw_grade))
+#     if kw_sj:
+#         a = a.filter(Subject.name.contains(kw_sj))
+#     return a.all()
+
+def add_subject(subject_name): #kwargs: những thông tin không bắt buộc
+    add_subject = Subject(name=subject_name)
+    db.session.add(add_subject)
+    db.session.commit()
 
 def get_user_by_id(user_id):
     return User.query.get(user_id)
