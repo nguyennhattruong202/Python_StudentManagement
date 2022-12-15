@@ -181,7 +181,6 @@ def emp_index():
     else:
         return redirect('/login')
 
-
 def emp_load_student():
     keyword = request.args.get('keyword')
     choose = request.args.get('choose')
