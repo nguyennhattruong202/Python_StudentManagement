@@ -21,16 +21,7 @@
 /* endblock 'emp_index '*/
 
 
-
-/* block 'emp_student_add' */
-#form_add_container{
-    padding: 10px;
-}
-/* endblock 'emp_student_add' */
-
-
-
-/* block 'emp_student' */
+/* block 'list_student' */
 .my-caption-box{
     padding: 10px;
     border-top: 5px solid #07689f;
@@ -43,4 +34,41 @@
     padding: 0px 10px 10px 10px;
     background-color: #ffffff;
 }
-/* endblock 'emp_student' */
+#search-student{
+    width: 50%;
+}
+#search-student, #search-filter{
+    border-radius: 0px;
+}
+#search-student-container{
+    padding: 0px 10px;
+    background-color: #ffffff;
+}
+/* endblock 'list_student' */
+
+
+
+/* block 'list_class' */
+#table-class{
+    padding: 0px 10px 10px 10px;
+    background-color: #ffffff;
+}
+
+#search-class{
+    width: 50%;
+}
+#search-class, #search-filter{
+    border-radius: 0px;
+}
+/* endblock 'list_class' */
+
+/* block 'add_student' */
+#form-add-student{
+    padding: 0px 10px 10px 10px;
+    background-color: #ffffff;
+}
+.my-form{
+    margin-bottom: 20px;
+    border-radius: 0px;
+}
+/* endblock 'add_student' */

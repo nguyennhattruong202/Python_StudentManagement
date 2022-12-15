@@ -1,6 +1,5 @@
 {% extends 'layout/base.html' %}
 {% block title %}
-<title>Trang chủ Hệ thống quản lý học sinh</title>
 <title>E-SM - Hệ thống quản lý giáo dục</title>
 {% endblock %}
 {% block css %}
@@ -18,9 +17,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#contact_container">Liên hệ</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Về chúng tôi</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
@@ -33,51 +29,95 @@
                 </li>
                 {% if current_user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/logout" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Xin chào, {{ current_user.full_name }}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/employee">Trang chủ nhân viên</a></li>
-                        <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
-                        <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Đăng nhập</a>
-                </li>
-                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Xem thông tin
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/list_student"> <i class="fa-sharp fa-solid fa-eye"></i> Xem
-                            danh sách học sinh</a></li>
-                        <li><a class="dropdown-item" href="/list_class"> <i class="fa-regular fa-eye"></i> Xem
-                            danh sách lớp</a></li>
-                        <li><a class="dropdown-item" href="/list_subject"> <i class="fa-regular fa-eye"></i> Xem
-                            danh sách môn học </a></li>
-                        <li><a class="dropdown-item" href="/list_score"> <i class="fa-regular fa-eye"></i> Xem
-                            bảng điểm </a></li>
+                        <li>
+                            <a class="dropdown-item" href="/employee/students">
+                                <i class="fa-sharp fa-solid fa-eye"></i>
+                                Xem danh sách học sinh
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/employee/classes">
+                                <i class="fa-regular fa-eye"></i>
+                                Xem danh sách lớp
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/list_subject">
+                                <i class="fa-regular fa-eye"></i>
+                                Xem danh sách môn học
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/list_score">
+                                <i class="fa-regular fa-eye"></i>
+                                Xem bảng điểm
+                            </a>
+                        </li>
                     </ul>
                 </li>
-                 </li>
-                 <li class="nav-item dropdown">
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Quản lý chung
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item " href="/score_manager"><i class="fa-solid fa-feather"></i> Quản lý điểm</a></li>
-                        <li><a class="dropdown-item" href="/subject_manager"> <i class="fa-solid fa-clipboard"></i> Quản lý môn học </a></li>
-                        <li><a class="dropdown-item " href="/list_class/add_class"><i class="fa-solid fa-school"></i> Quản lý lớp học</a></li>
-                         <li><a class="dropdown-item " href="/list_student/input_student"><i class="fa-sharp fa-solid fa-user-plus"></i> Thêm hồ sơ</a></li>
+                        <li>
+                            <a class="dropdown-item " href="/score_manager">
+                                <i class="fa-solid fa-feather"></i>
+                                Quản lý điểm
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/subject_manager">
+                                <i class="fa-solid fa-clipboard"></i>
+                                Quản lý môn học
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item " href="/list_class/add_class">
+                                <i class="fa-solid fa-school"></i>
+                                Quản lý lớp học
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item " href="/employee/student/add">
+                                <i class="fa-sharp fa-solid fa-user-plus"></i>
+                                Thêm hồ sơ
+                            </a>
+                        </li>
                     </ul>
                 </li>
-                 <li class="nav-item">
-                    <a class="nav-link text-warning" href="/stats"> Thống kê báo cáo</a>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/stats">
+                        Thống kê báo cáo
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/logout" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Xin chào, {{ current_user.full_name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="/employee">Trang chủ nhân viên</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/logout">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Đăng nhập</a>
                 </li>
                 {% endif %}
             </ul>

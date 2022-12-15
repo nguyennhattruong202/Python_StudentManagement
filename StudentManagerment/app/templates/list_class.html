@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row justify-content-between" style="margin: 15px">
             <div class="col-4">
-                <a href="{{ url_for('add_class') }}">
+                <a href="/list_class/add_class">
                     <button type="button" class="btn btn-primary" style="margin: auto 10px">
                         Tạo lớp học
                     </button>
@@ -53,7 +53,7 @@
                     <td>{{ s[1] }}</td>
                     <td>{{ s[3] }}</td>
                     <td>
-                        <a href="{{ url_for('class_detail', class_room_id = s[0]) }}"> Xem</a>
+                        <a href="/class_detail/{{ s[0] }}"> Xem</a>
                     </td>
                 </tr>
 

@@ -1,20 +1,47 @@
-from app import app, controller, dao
+from app import app, controller, dao, login
 from flask import session, request, render_template, redirect, url_for
 import math
 
 app.add_url_rule('/', 'index', controller.index)
 app.add_url_rule('/login', 'login', controller.login, methods=['get', 'post'])
 
-
 # app.add_url_rule('/input_student','input_student', controller.input_student,methods=['get','post'])
 # app.add_url_rule('/list_student','list_student', controller.list_student(),methods=['get','post'])
+
+# Block base
+app.add_url_rule('/', 'index', controller.index)
+app.add_url_rule('/logout', 'logout', controller.logout_my_user)
+app.add_url_rule('/login', 'login', controller.user_login, methods=['get', 'post'])
+# Endblock base
+
+# Block employee
+app.add_url_rule('/employee', 'employee', controller.emp_index)
+app.add_url_rule('/employee/students', 'employee-students', controller.emp_load_student)
+app.add_url_rule('/employee/student/add', 'employee-student-add', controller.emp_add_student, methods=['GET', 'POST'])
+app.add_url_rule('/employee/classes', 'classes', controller.emp_load_class)
+# Endblock employee
+
+
+# app.add_url_rule('/list_student', 'list-student', controller.list_student)
+app.add_url_rule('/list_student/<int:student_id>', 'student-detail', controller.student_detail)
+
+
+# app.add_url_rule('/list_student/input_student', 'add-student', controller.input_student, methods=['get', 'post'])
+# app.add_url_rule('/list_class', 'list-class', controller.list_class)
+# app.add_url_rule('/list_class/add_class', 'add-class', controller.add_class, methods=['get', 'post'])
+# app.add_url_rule('/class_detail/<int:class_room_id>', 'class-detail', controller.class_detail)
+# app.add_url_rule('/list_class/add_student_class/<int:class_room_id>', 'add-student-class', controller.add_student_class,
+#                  methods=['get', 'post'])
+# app.add_url_rule('/list_subject', 'list-subject', controller.list_subject)
+# app.add_url_rule('/list_subject/add_subject', 'add-subject', controller.add_subject, methods=['get', 'post'])
 
 
 @app.route('/list_student')
 def list_student():
     kw = request.args.get("keyword")
     page = request.args.get("page", 1)
-    student = dao.list_student(kw=kw, page=int(page))  # B1: Lấy student, read load studet lên / Biến student thực hiện trong utils hàm load_student
+    student = dao.list_student(kw=kw, page=int(
+        page))  # B1: Lấy student, read load studet lên / Biến student thực hiện trong utils hàm load_student
     counter = dao.count_student()
     return render_template('list_student.html', student=student, pages=math.ceil(counter / app.config["PAGE_SIZE"]))
 
@@ -110,17 +137,6 @@ def add_student_class(class_room_id):
         else:
             err_msg = "Số lượng học sinh trong lớp đã đủ"
     return render_template('add_student_class.html', classroom=classroom, err_msg=err_msg)
-
-
-from app import app, controller, dao, login
-from app.admin import *
-
-app.add_url_rule('/', 'index', controller.index)
-app.add_url_rule('/logout', 'logout', controller.logout_my_user)
-app.add_url_rule('/employee', 'employee', controller.index_employee)
-app.add_url_rule('/employee/students', 'employee-students', controller.student_employee)
-app.add_url_rule('/employee/student/add', 'employee-student-add', controller.employee_student_add)
-app.add_url_rule('/login', 'login', controller.user_login, methods=['get', 'post'])
 
 
 @login.user_loader
