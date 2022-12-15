@@ -1,6 +1,8 @@
 {% extends 'layout/base.html' %}
 
-{% block title %}Hồ sơ của học sinh{% endblock %}
+{% block title %}
+<title>Hồ sơ của học sinh</title>
+{% endblock %}
 
 {% block content %}
     <h3 class="subject text-center">Hồ sơ của học sinh</h3>
@@ -34,7 +36,7 @@
             </tbody>
         </table>
 
-        <a href="{{ url_for('input_student', student_id = student.id) }}">
+        <a href="/employee/student/add">
             <button type="button" class="btn btn-primary">
                 Thay đổi hồ sơ
             </button>

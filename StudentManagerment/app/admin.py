@@ -23,13 +23,6 @@ class LogoutView(AuthenticatedView):
         return redirect(url_for('login'))
 
 
-#
-class AdminView(AdminIndexView):
-    @expose('/')
-    def index(self):
-        return self.render('admin/home.html')
-
-
 class UserModelView(AuthenticatedModelView):
     column_display_pk = True
     can_view_details = True
@@ -85,7 +78,13 @@ class ScoreModelView(AuthenticatedModelView):
     column_display_pk = True
 
 
-admin = Admin(app=app, name='E-SM', template_mode='bootstrap4', index_view=AdminView())
+class AdminView(AdminIndexView):
+    @expose('/')
+    def index(self):
+        return self.render('admin/home.html')
+
+
+admin = Admin(app=app, name='E-SM', template_mode='bootstrap4', index_view=AdminView)
 admin.add_view(StudentModelView(Student, db.session, name="Học sinh"))
 admin.add_view(UserModelView(User, db.session, name='Người dùng'))
 admin.add_view(ClassRoomModelView(ClassRoom, db.session, name='Lớp'))
