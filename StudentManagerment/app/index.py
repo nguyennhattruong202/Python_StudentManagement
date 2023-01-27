@@ -1,29 +1,29 @@
-from app import app, controller, dao, login
+from app import app, controllers, dao, login
 from flask import session, request, render_template, redirect, url_for
 import math
 
-app.add_url_rule('/', 'index', controller.index)
-app.add_url_rule('/login', 'login', controller.login, methods=['get', 'post'])
+app.add_url_rule('/', 'index', controllers.index)
+# app.add_url_rule('/login', 'login', controller.login, methods=['get', 'post'])
 
 # app.add_url_rule('/input_student','input_student', controller.input_student,methods=['get','post'])
 # app.add_url_rule('/list_student','list_student', controller.list_student(),methods=['get','post'])
 
 # Block base
-app.add_url_rule('/', 'index', controller.index)
-app.add_url_rule('/logout', 'logout', controller.logout_my_user)
-app.add_url_rule('/login', 'login', controller.user_login, methods=['get', 'post'])
+app.add_url_rule('/', 'index', controllers.index)
+app.add_url_rule('/logout', 'logout', controllers.logout_my_user)
+app.add_url_rule('/login', 'login', controllers.user_login, methods=['get', 'post'])
 # Endblock base
 
 # Block employee
-app.add_url_rule('/employee', 'employee', controller.emp_index)
-app.add_url_rule('/employee/students', 'employee-students', controller.emp_load_student)
-app.add_url_rule('/employee/student/add', 'employee-student-add', controller.emp_add_student, methods=['GET', 'POST'])
-app.add_url_rule('/employee/classes', 'classes', controller.emp_load_class)
+app.add_url_rule('/employee', 'employee', controllers.emp_index)
+app.add_url_rule('/employee/students', 'employee-students', controllers.emp_load_student)
+app.add_url_rule('/employee/student/add', 'employee-student-add', controllers.emp_add_student, methods=['GET', 'POST'])
+app.add_url_rule('/employee/classes', 'classes', controllers.emp_load_class)
 # Endblock employee
 
 
 # app.add_url_rule('/list_student', 'list-student', controller.list_student)
-app.add_url_rule('/list_student/<int:student_id>', 'student-detail', controller.student_detail)
+app.add_url_rule('/list_student/<int:student_id>', 'student-detail', controllers.student_detail)
 
 
 # app.add_url_rule('/list_student/input_student', 'add-student', controller.input_student, methods=['get', 'post'])
